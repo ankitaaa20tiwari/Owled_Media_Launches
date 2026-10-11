@@ -6,10 +6,11 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   async redirects() {
     return [
-      // Temporary (307) for now; only the exact root path matches.
+      // Temporary (307) for now; only the exact root path matches, so
+      // /confido-health and every other route stay on owledlaunches.com.
       {
         source: "/",
-        destination: "/confido-health",
+        destination: "https://owledmedia.com",
         permanent: false,
       },
     ];
