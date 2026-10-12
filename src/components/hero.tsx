@@ -1,3 +1,4 @@
+import { LaunchCountdown } from "@/components/launch-countdown";
 import { launchDateLong, launchDateMachine, launchDateTimeMachine, launchTime } from "@/lib/launch";
 
 export function Hero() {
@@ -19,6 +20,8 @@ export function Hero() {
           <span aria-hidden="true" className="h-px w-6 bg-brand/40" />
         </p>
       </div>
+
+      <LaunchCountdown target={launchDateTimeMachine} />
     </section>
   );
 }

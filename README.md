@@ -37,8 +37,9 @@ What visitors see:
 | One or both links set | Status "The launch is live"; each configured card opens its post in a new tab |
 | A link that isn't a single X / LinkedIn post (typo, profile, homepage) | **The deploy fails** with a message naming the problem. The previous version stays live, so visitors never get a wrong link. Check the Vercel build log, fix the link, save again. |
 
-There is intentionally no countdown or timer. The page only says the launch is live once a real
-post link is in the config.
+The hero shows a live countdown to `launchDate` (days, hours, minutes, seconds), which disappears
+once that moment passes. The countdown never claims the launch is live: the page only says that once
+a real post link is in the config.
 
 ---
 

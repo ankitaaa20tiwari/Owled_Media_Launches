@@ -30,8 +30,9 @@
  *    The site that's already live stays as it was, so it never points
  *    visitors at the wrong place.
  *
- *  There is deliberately no timer: the page only says the launch is live
- *  once a real post link has been added here.
+ *  The page shows a countdown to `launchDate` that disappears once that
+ *  moment passes. It only says the launch is live once a real post link
+ *  has been added here.
  */
 
 export type LaunchConfig = {
