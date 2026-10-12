@@ -10,11 +10,14 @@ export function Hero() {
       </p>
 
       <h1 className="mx-auto mt-5 max-w-5xl font-display text-[clamp(2.75rem,7.6vw,6rem)] leading-[1.02] font-normal tracking-[-0.025em] text-balance text-ink sm:mt-7">
-        We&rsquo;re putting the <span className="relative inline-block italic">
-          care
+        Moving healthcare <span className="relative inline-block italic">
+          forward
           <span aria-hidden="true" className="bg-sun absolute inset-x-0 bottom-[0.06em] -z-10 h-[0.22em] rounded-full" />
-        </span> back in healthcare.
+        </span>
       </h1>
+      <p className="mx-auto mt-4 max-w-3xl text-lg text-balance text-muted sm:mt-5 sm:text-xl">
+        (System of Action, Intelligently, Autonomously)
+      </p>
 
       <div className="mt-6 flex flex-col items-center gap-3 sm:mt-8">
         <p className="text-base text-muted sm:text-lg">

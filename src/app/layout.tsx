@@ -29,7 +29,7 @@ const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 const title = "Confido Health · Launch Day";
 const description =
-  "We're putting the care back in healthcare. Confido Health is launching AI agents that work alongside care teams 24/7. View the launch post on X and LinkedIn.";
+  "Moving healthcare forward (System of Action, Intelligently, Autonomously). Confido Health is launching AI agents that work alongside care teams 24/7. View the launch post on X and LinkedIn.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

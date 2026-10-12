@@ -90,7 +90,7 @@ export function Wordmark({ className = "text-[19px] text-ink", layout = "primary
       <span>
         <span className="font-semibold">Confido</span>
         <span className="font-normal">Health</span>
-        <sup className="ml-[0.1em] align-[0.15em] text-[0.3em] font-normal tracking-normal">TM</sup>
+        <span className="ml-[0.08em] align-baseline text-[0.3em] font-normal tracking-normal">TM</span>
       </span>
     </span>
   );
