@@ -54,9 +54,9 @@ export function LaunchCountdown({ target }: { target: string }) {
       {parts.map(({ label, value }) => (
         <div
           key={label}
-          className="flex w-[4.5rem] flex-col items-center rounded-2xl border border-line bg-subtle py-4 sm:w-28 sm:py-5"
+          className="flex w-[4.5rem] flex-col items-center rounded-2xl border border-line bg-ivory py-4 sm:w-28 sm:py-5"
         >
-          <span className="text-[2rem] leading-none font-semibold tracking-[-0.03em] text-ink tabular-nums sm:text-[2.75rem]">
+          <span className="font-display text-[2.125rem] leading-none font-medium tracking-[-0.02em] text-ink tabular-nums sm:text-[3rem]">
             {value}
           </span>
           <span className="label mt-2.5 text-muted sm:mt-3">{label}</span>

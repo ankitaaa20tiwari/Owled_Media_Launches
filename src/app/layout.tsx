@@ -1,16 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Inter } from "next/font/google";
+import { Chivo_Mono, Geist, STIX_Two_Text } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Brand typefaces, loaded as static files in the approved weights only.
+const stix = STIX_Two_Text({
+  variable: "--font-stix",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["500"],
+  weight: ["400", "500", "600"],
+});
+
+const chivoMono = Chivo_Mono({
+  variable: "--font-chivo-mono",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 // Vercel provides the production domain at build time; locally we fall back to localhost.
@@ -46,7 +55,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${stix.variable} ${geist.variable} ${chivoMono.variable}`}>
       <body>{children}</body>
     </html>
   );

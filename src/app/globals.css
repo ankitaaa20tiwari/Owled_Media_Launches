@@ -1,17 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* Confido Health brand blue and the neutrals around it. */
-  --color-brand: #3267ff;
-  --color-brand-deep: #2152e6;
-  --color-brand-tint: #f2f5ff;
-  --color-ink: #0e1630;
-  --color-muted: #5a6276;
-  --color-line: #e5e8ef;
-  --color-subtle: #fafbfd;
+  /* Confido Health brand palette (Brand Guidance › Color). */
+  --color-charcoal: #2d2c2b;
+  --color-charcoal-light: #4d4d4c;
+  --color-amber: #ffa500; /* Solar Amber */
+  --color-sunbeam: #ffbd28; /* Sunbeam Yellow */
+  --color-ivory: #f8f6f1; /* digital only */
+  --color-sand: #ebe6db;
+  --color-beige: #b3a498;
+  --color-beige-deep: #94877c;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  /* Roles used across the page. Amber fails contrast as text on light grounds,
+     so it is only ever a fill or accent; text stays charcoal. */
+  --color-ink: var(--color-charcoal);
+  --color-muted: var(--color-charcoal-light);
+  --color-line: var(--color-sand);
+  --color-subtle: var(--color-ivory);
+
+  --font-display: var(--font-stix), ui-serif, Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-chivo-mono), ui-monospace, "SFMono-Regular", monospace;
 }
 
 @layer base {
@@ -21,14 +30,19 @@
 
   body {
     @apply bg-white font-sans text-ink antialiased;
-    font-feature-settings: "cv11", "ss01";
   }
 
   ::selection {
-    @apply bg-brand text-white;
+    @apply bg-sunbeam text-charcoal;
   }
 }
 
+/* Chivo Mono eyebrow, used sparingly per the brand typography guidance. */
 @utility label {
-  @apply font-mono text-[11px] leading-[1.5] font-medium tracking-[0.14em] uppercase sm:tracking-[0.16em];
+  @apply font-mono text-[11px] leading-[1.5] font-normal tracking-[0.12em] uppercase sm:tracking-[0.14em];
+}
+
+/* Solar Amber / Sunbeam Yellow brand gradient. */
+@utility bg-sun {
+  background-image: linear-gradient(90deg, var(--color-amber), var(--color-sunbeam));
 }

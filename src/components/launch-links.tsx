@@ -15,16 +15,16 @@ export function LaunchLinks() {
             id="launch-status"
             className={`label inline-flex max-w-full items-center gap-2.5 text-balance ${
               isLive
-                ? "rounded-full border border-brand/25 bg-brand-tint px-3.5 py-2 text-brand"
+                ? "rounded-full border border-sunbeam/60 bg-sunbeam/15 px-3.5 py-2 text-ink"
                 : // The long pending message wraps on phones, so the pill outline only appears on wider screens.
                   "text-muted sm:rounded-full sm:border sm:border-line sm:px-3.5 sm:py-2"
             }`}
           >
             <span aria-hidden="true" className={`relative size-1.5 shrink-0 ${isLive ? "flex" : "hidden sm:flex"}`}>
               {isLive && (
-                <span className="absolute inset-0 rounded-full bg-brand opacity-60 motion-safe:animate-ping" />
+                <span className="absolute inset-0 rounded-full bg-amber opacity-60 motion-safe:animate-ping" />
               )}
-              <span className={`relative size-1.5 rounded-full ${isLive ? "bg-brand" : "bg-muted/60"}`} />
+              <span className={`relative size-1.5 rounded-full ${isLive ? "bg-amber" : "bg-beige"}`} />
             </span>
             {isLive ? "The launch is live" : "Post links will be available on launch day"}
           </h2>
