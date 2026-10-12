@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { MARK_ROWS, MARK_VIEWBOX } from "@/components/wordmark";
+import { MARK_PATH, MARK_VIEWBOX } from "@/components/wordmark";
 import { launchDateLong, launchTime } from "@/lib/launch";
 
 export const alt = "Confido Health launch day: We're putting the care back in healthcare.";
@@ -23,13 +23,8 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", fontSize: 34, letterSpacing: -0.5 }}>
-          <svg width="45" height="34" viewBox={MARK_VIEWBOX} fill="#2d2c2b" style={{ marginRight: 14 }}>
-            {MARK_ROWS.map(([start, split, end], row) => (
-              <g key={row}>
-                <rect x={start} y={row * 3.72} width={split - 1.2 - start} height="2.4" rx="1.2" />
-                <rect x={split} y={row * 3.72} width={end - split} height="2.4" rx="1.2" />
-              </g>
-            ))}
+          <svg width="31" height="34" viewBox={MARK_VIEWBOX} fill="#2d2c2b" style={{ marginRight: 14 }}>
+            <path d={MARK_PATH} />
           </svg>
           <span style={{ fontWeight: 700 }}>Confido</span>
           <span>Health</span>
