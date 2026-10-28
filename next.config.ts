@@ -15,6 +15,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      // The Bivia launch page is a standalone HTML file in public/, so it
+      // skips the Confido root layout's fonts and styles.
+      {
+        source: "/bivia-from-articul8",
+        destination: "/bivia-from-articul8/index.html",
+      },
+    ];
+  },
   turbopack: {
     rules: {
       "*.css": {
