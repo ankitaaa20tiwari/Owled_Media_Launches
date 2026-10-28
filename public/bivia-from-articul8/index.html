@@ -71,8 +71,20 @@ h1,h2,h3,h4{ margin:0; line-height:1.05; letter-spacing:-.03em; }
 .cd{ display:inline-grid; grid-template-columns:repeat(4,auto); gap:12px; margin-top:30px; }
 .cd-u{ min-width:88px; padding:16px 10px 12px; background:#fff; border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); }
 .cd-u:last-child{ box-shadow:4px 4px 0 var(--brand-teal); }
-.cd-u b{ display:block; font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; letter-spacing:-.03em; line-height:1; font-variant-numeric:tabular-nums; }
-.cd-u span{ display:block; margin-top:8px; font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); }
+/* split-flap digits: two static halves + two flaps that rotate on change */
+.flip{ position:relative; width:1.55em; height:1.4em; margin:0 auto; perspective:4em; font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+.flip::after{ content:""; position:absolute; left:0; right:0; top:50%; height:1px; margin-top:-.5px; background:rgba(10,14,26,.16); z-index:3; }
+.f-top,.f-bot{ position:absolute; left:0; right:0; height:50%; overflow:hidden; text-align:center; }
+.f-top{ top:0; background:#EEF2FF; border-radius:6px 6px 0 0; }
+.f-bot{ bottom:0; background:#E4E9FF; border-radius:0 0 6px 6px; }
+.f-top span,.f-bot span{ display:block; height:1.4em; line-height:1.4em; }
+.f-bot span{ transform:translateY(-50%); }
+.f-flap{ z-index:2; backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+.f-top.f-flap{ transform-origin:50% 100%; animation:flipTop .28s ease-in both; }
+.f-bot.f-flap{ transform-origin:50% 0; animation:flipBot .28s ease-out .28s both; }
+@keyframes flipTop{ from{ transform:rotateX(0); } to{ transform:rotateX(-90deg); background:#D6DDFF; } }
+@keyframes flipBot{ from{ transform:rotateX(90deg); background:#F4F6FF; } to{ transform:rotateX(0); } }
+.cd-l{ display:block; margin-top:8px; font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); }
 .is-hidden{ display:none !important; }
 .when-alt{ margin:8px 0 0; font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint); }
 
@@ -177,10 +189,10 @@ footer{ position:relative; z-index:2; border-top:1px solid var(--line); padding:
       <span class="when-time">2:30 PM PT</span>
       <p class="when-alt">5:30 PM ET · Oct 29, 3:00 AM IST</p>
       <div><div class="cd" id="cd" role="timer" aria-label="Time until launch">
-        <div class="cd-u"><b id="cdD">--</b><span>Days</span></div>
-        <div class="cd-u"><b id="cdH">--</b><span>Hours</span></div>
-        <div class="cd-u"><b id="cdM">--</b><span>Minutes</span></div>
-        <div class="cd-u"><b id="cdS">--</b><span>Seconds</span></div>
+        <div class="cd-u"><div class="flip" id="cdD"><div class="f-top"><span>--</span></div><div class="f-bot"><span>--</span></div></div><span class="cd-l">Days</span></div>
+        <div class="cd-u"><div class="flip" id="cdH"><div class="f-top"><span>--</span></div><div class="f-bot"><span>--</span></div></div><span class="cd-l">Hours</span></div>
+        <div class="cd-u"><div class="flip" id="cdM"><div class="f-top"><span>--</span></div><div class="f-bot"><span>--</span></div></div><span class="cd-l">Minutes</span></div>
+        <div class="cd-u"><div class="flip" id="cdS"><div class="f-top"><span>--</span></div><div class="f-bot"><span>--</span></div></div><span class="cd-l">Seconds</span></div>
       </div></div>
       <span class="note is-hidden" id="cdDone">Bivia is live.</span>
     </div>
@@ -190,7 +202,7 @@ footer{ position:relative; z-index:2; border-top:1px solid var(--line); padding:
 <section class="posts">
   <div class="wrap">
     <div class="status">
-      <span class="status-pill" id="statusPill"><span class="dot"></span><span id="statusText">Post links will be available on launch day</span></span>
+      <span class="status-pill" id="statusPill"><span class="dot"></span><span id="statusText">Post links will be available at launch time</span></span>
       <p id="statusSub">The launch posts on X and LinkedIn will be linked here as soon as they’re published.</p>
     </div>
 
@@ -247,6 +259,30 @@ footer{ position:relative; z-index:2; border-top:1px solid var(--line); padding:
 /* Countdown to 28 Oct 2026, 2:30 PM PT (= 21:30 UTC = 29 Oct, 3:00 AM IST) */
 const LAUNCH = Date.UTC(2026, 9, 28, 21, 30);
 const pad = function (n) { return String(n).padStart(2, "0"); };
+const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function flap(cls, txt) {
+  const d = document.createElement("div");
+  d.className = cls + " f-flap";
+  d.innerHTML = "<span></span>";
+  d.firstChild.textContent = txt;
+  return d;
+}
+function setFlip(id, val) {
+  const el = document.getElementById(id);
+  const old = el.dataset.v;
+  if (old === val) return;
+  el.dataset.v = val;
+  const top = el.querySelector(".f-top span");
+  const bot = el.querySelector(".f-bot span");
+  el.querySelectorAll(".f-flap").forEach(function (f) { f.remove(); });
+  top.textContent = val;
+  if (old === undefined || calm || document.hidden) { bot.textContent = val; return; }
+  // the old value folds down over the new top half; the new bottom half folds in after it
+  bot.textContent = old;
+  const a = flap("f-top", old), b = flap("f-bot", val);
+  el.append(a, b);
+  b.addEventListener("animationend", function () { bot.textContent = val; a.remove(); b.remove(); });
+}
 function tick() {
   const ms = LAUNCH - Date.now();
   if (ms <= 0) {
@@ -257,10 +293,10 @@ function tick() {
     return;
   }
   const s = Math.floor(ms / 1000);
-  document.getElementById("cdD").textContent = pad(Math.floor(s / 86400));
-  document.getElementById("cdH").textContent = pad(Math.floor(s % 86400 / 3600));
-  document.getElementById("cdM").textContent = pad(Math.floor(s % 3600 / 60));
-  document.getElementById("cdS").textContent = pad(s % 60);
+  setFlip("cdD", pad(Math.floor(s / 86400)));
+  setFlip("cdH", pad(Math.floor(s % 86400 / 3600)));
+  setFlip("cdM", pad(Math.floor(s % 3600 / 60)));
+  setFlip("cdS", pad(s % 60));
 }
 const timer = setInterval(tick, 1000);
 tick();
